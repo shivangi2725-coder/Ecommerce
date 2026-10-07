@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Store — Premium Ecommerce Experience</title>
+  <meta name="description" content="A modern, responsive ecommerce website template." />
+  <style>
+    :root {
+      --mustard: #C58E0D;
+      --ink: #3F3933;
+      --cream: #F7F3EC;
+      --white: #FFFFFF;
+      --muted: #766F67;
+      --line: #DED8CE;
+      --dark: #24211E;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    .announcement {
+      background: var(--ink);
+      color: white;
+      text-align: center;
+      padding: 9px 16px;
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      max-width: 1240px;
+      margin: auto;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .logo {
+      font-family: Georgia, serif;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
+
+    .logo span { color: var(--mustard); }
+
+    .links {
+      display: flex;
+      gap: 30px;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .links a:hover { color: var(--mustard); }
+
+    .nav-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 18px;
+      padding: 5px;
+    }
+
+    .cart-count {
+      display: inline-flex;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--mustard);
+      color: white;
+      font-size: 10px;
+      vertical-align: top;
+      margin-left: -8px;
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        linear-gradient(rgba(63,57,51,.20), rgba(63,57,51,.28)),
+        radial-gradient(circle at 50% 30%, #e5c27a, #a66f22 55%, #5d4632);
+      color: white;
+      padding: 80px 24px;
+    }
+
+    .hero-inner { max-width: 780px; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: .95;
+      margin-bottom: 24px;
+    }
+    .hero p {
+      max-width: 540px;
+      margin: 0 auto 30px;
+      font-size: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: white;
+      padding: 14px 28px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 11px;
+      transition: .25s;
+    }
+    .btn:hover { background: var(--mustard); border-color: var(--mustard); }
+
+    .section {
+      max-width: 1240px;
+      margin: auto;
+      padding: 90px 24px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 35px;
+      gap: 20px;
+    }
+
+    .section h2 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+    }
+
+    .section-head p { color: var(--muted); max-width: 430px; font-size: 14px; }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-card { position: relative; }
+    .product-image {
+      aspect-ratio: 4 / 5;
+      background: #e9e2d8;
+      overflow: hidden;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      position: relative;
+    }
+
+    .product-image::after {
+      content: "";
+      width: 58%;
+      height: 78%;
+      border-radius: 44% 44% 8% 8%;
+      background: var(--product-color, #c58e0d);
+      box-shadow: 0 25px 50px rgba(0,0,0,.12);
+      transform: rotate(-2deg);
+    }
+
+    .product-card:nth-child(2) .product-image::after { transform: rotate(2deg); }
+    .product-card:nth-child(3) .product-image::after { transform: rotate(-1deg); }
+    .product-card:nth-child(4) .product-image::after { transform: rotate(1deg); }
+
+    .quick-add {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: .25s;
+      border: 0;
+      padding: 13px;
+      background: white;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: 10px;
+    }
+    .product-card:hover .quick-add { opacity: 1; transform: translateY(0); }
+
+    .product-info { padding: 15px 2px 30px; }
+    .product-info h3 { font-family: Georgia, serif; font-size: 20px; font-weight: 400; }
+    .product-info p { color: var(--muted); font-size: 12px; margin: 5px 0 8px; }
+    .price { font-size: 13px; font-weight: 700; }
+
+    .story {
+      background: var(--cream);
+    }
+    .story-grid {
+      max-width: 1240px;
+      margin: auto;
+      padding: 100px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .story-art {
+      min-height: 520px;
+      background: linear-gradient(145deg, #f0d08b, #9b641f);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-family: Georgia, serif;
+      font-size: 74px;
+    }
+    .story-copy .eyebrow { color: var(--mustard); }
+    .story-copy h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 25px;
+    }
+    .story-copy p { color: var(--muted); max-width: 500px; margin-bottom: 28px; }
+
+    .newsletter {
+      background: var(--ink);
+      color: white;
+      text-align: center;
+      padding: 90px 24px;
+    }
+    .newsletter h2 { font-family: Georgia, serif; font-size: 46px; font-weight: 400; }
+    .newsletter p { margin: 14px auto 28px; color: #d5d0ca; }
+    .newsletter-form {
+      max-width: 480px;
+      margin: auto;
+      display: flex;
+      border-bottom: 1px solid #aaa;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+    }
+    .newsletter-form button {
+      border: 0;
+      background: transparent;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: 10px;
+    }
+
+    footer {
+      background: #1d1a18;
+      color: #d5d0ca;
+      padding: 50px 24px;
+    }
+    .footer-grid {
+      max-width: 1240px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 35px;
+    }
+    footer h3 { color: white; font-family: Georgia, serif; font-size: 24px; font-weight: 400; margin-bottom: 15px; }
+    footer h4 { color: white; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 15px; }
+    footer a { display: block; font-size: 13px; margin-bottom: 9px; }
+    footer a:hover { color: white; }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      background: var(--ink);
+      color: white;
+      padding: 14px 18px;
+      font-size: 13px;
+      transform: translateY(120px);
+      transition: .3s;
+      z-index: 50;
+    }
+    .toast.show { transform: translateY(0); }
+
+    @media (max-width: 850px) {
+      .links { display: none; }
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .story-art { min-height: 380px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .nav { height: 64px; padding: 0 16px; }
+      .logo { font-size: 25px; }
+      .section { padding: 65px 16px; }
+      .products { gap: 12px; }
+      .product-info h3 { font-size: 17px; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 12px; }
+      .story-grid { padding: 65px 16px; }
+      .story-art { min-height: 300px; font-size: 55px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">COMPLIMENTARY SHIPPING ON ORDERS ABOVE ₹2,999</div>
+
+  <header>
+    <nav class="nav">
+      <a class="logo" href="#">Modern<span>Store</span></a>
+
+      <div class="links">
+        <a href="#new-in">New In</a>
+        <a href="#collections">Collections</a>
+        <a href="#world-of-bo">Our Story</a>
+        <a href="#about">About</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Search">⌕</button>
+        <button class="icon-btn" aria-label="Account">♙</button>
+        <button class="icon-btn" aria-label="Cart" onclick="showCart()">
+          ♡<span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">Modern Store / New Collection</div>
+        <h1>For Every You,<br>Everywhere.</h1>
+        <p>Thoughtfully designed women's shirts for workdays, weekends, getaways and every version of you in between.</p>
+        <a href="#new-in" class="btn">Shop New In</a>
+      </div>
+    </section>
+
+    <section class="section" id="new-in">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">The Edit</div>
+          <h2>New In</h2>
+        </div>
+        <p>Relaxed silhouettes, considered details and premium fabrics — made to live beyond one occasion.</p>
+      </div>
+
+      <div class="products" id="collections">
+        <article class="product-card">
+          <div class="product-image" style="--product-color:#e66d21;">
+            <button class="quick-add" onclick="addToCart('Mandarin Orange Relaxed Fit Linen Shirt')">Quick Add</button>
+          </div>
+          <div class="product-info">
+            <h3>Mandarin Orange</h3>
+            <p>Relaxed Fit Linen Shirt</p>
+            <span class="price">₹3,490</span>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image" style="--product-color:#c58e0d;">
+            <button class="quick-add" onclick="addToCart('Golden Hour Mustard Shirt')">Quick Add</button>
+          </div>
+          <div class="product-info">
+            <h3>Golden Hour</h3>
+            <p>Oversized Cotton Poplin Shirt</p>
+            <span class="price">₹3,290</span>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image" style="--product-color:#efe7d5;">
+            <button class="quick-add" onclick="addToCart('The Rose Check')">Quick Add</button>
+          </div>
+          <div class="product-info">
+            <h3>The Rosé Check</h3>
+            <p>Pastel Plaid Crop Shirt</p>
+            <span class="price">₹2,990</span>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image" style="--product-color:#252525;">
+            <button class="quick-add" onclick="addToCart('Classic Black Striped Oversized Shirt')">Quick Add</button>
+          </div>
+          <div class="product-info">
+            <h3>Classic Black</h3>
+            <p>Striped Oversized Poplin Shirt</p>
+            <span class="price">₹3,190</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="story" id="world-of-bo">
+      <div class="story-grid">
+        <div class="story-art">ST</div>
+        <div class="story-copy">
+          <div class="eyebrow">The Our Story</div>
+          <h2>A little character. A lot of personality.</h2>
+          <p>Discover More — our signature koala and the tiny reminder behind every Modern Store piece: style should feel like you. Every order can carry a little piece of her world.</p>
+          <a href="#" class="btn">Discover More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Modern Store Journal</div>
+          <h2>Details matter.</h2>
+        </div>
+        <p>From the yoke to the cuffs, we celebrate the small design decisions that make a shirt feel considered.</p>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="eyebrow">Stay in the loop</div>
+      <h2>Come along.</h2>
+      <p>New collections, stories and little things from the Our Story.</p>
+      <form class="newsletter-form" onsubmit="subscribe(event)">
+        <input id="email" type="email" placeholder="Your email address" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>Modern Store</h3>
+        <p>For Every You, Everywhere.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="#new-in">New In</a>
+        <a href="#collections">Collections</a>
+        <a href="#">Size Guide</a>
+      </div>
+      <div>
+        <h4>About</h4>
+        <a href="#about">Our Story</a>
+        <a href="#world-of-bo">Our Story</a>
+        <a href="#">Contact</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">FAQs</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let cart = 0;
+
+    function addToCart(product) {
+      cart++;
+      document.getElementById("cartCount").textContent = cart;
+      showToast(product + " added to your bag.");
+    }
+
+    function showCart() {
+      if (cart === 0) {
+        showToast("Your bag is currently empty.");
+      } else {
+        showToast("You have " + cart + " item" + (cart > 1 ? "s" : "") + " in your bag.");
+      }
+    }
+
+    function subscribe(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value;
+      showToast("You're on the list — welcome to Modern Store.");
+      event.target.reset();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+  </script>
+</body>
+</html>
